@@ -23,7 +23,7 @@ group_for() {
       echo "必装入口" ;;
     dbs-diagnosis|dbs-deconstruct|dbs-goal|dbs-good-question|dbs-slowisfast|dbs-action)
       echo "看商业问题" ;;
-    dbs-content|dbs-benchmark|dbs-hook|dbs-xhs-title|dbs-ai-check|dbs-wechat-html|dbs-spread|dbs-resonate)
+    dbs-content|dbs-benchmark|dbs-hook|dbs-xhs-title|dbs-ai-check|dbs-wechat-html|dbs-spread|dbs-resonate|dbs-script-flow)
       echo "做内容" ;;
     dbs-content-system)
       echo "进阶-内容工程" ;;
@@ -33,7 +33,7 @@ group_for() {
       echo "进阶-状态管理" ;;
     dbs-decision)
       echo "进阶-决策系统" ;;
-    dbs-agent-migration)
+    dbs-agent-migration|dbs-bridge)
       echo "进阶-Agent基建" ;;
     dbs-learning)
       echo "进阶-学习" ;;
@@ -109,7 +109,15 @@ PY
 }
 
 for skill_md in "$ROOT_DIR"/skills/*/SKILL.md; do
-  build_one "$(dirname "$skill_md")"
+  skill_dir="$(dirname "$skill_md")"
+  skill_name="$(basename "$skill_dir")"
+
+  if [[ "$skill_name" == *beta* ]]; then
+    echo "skipped local-only beta skill: $skill_name"
+    continue
+  fi
+
+  build_one "$skill_dir"
 done
 
 cat > "$INNER_DIR/README.md" <<EOF

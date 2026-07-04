@@ -1,10 +1,14 @@
 # dbskill
 
-dontbesilent 商业诊断工具箱。从 12,307 条推文中提炼方法论，做成 24 个 Agent skill。
+dontbesilent 商业诊断工具箱。从 12,307 条推文中提炼方法论，做成一组可组合使用的 Agent skill。
 
 可在 Claude Code、Codex、Cursor、Trae Solo 等任意支持 skill / system prompt 的 Agent 上使用。
 
-**最新更新：v2.15.1**
+`beta` 命名的 skill 仅供本地试验使用，暂时忽略发布，不进入 GitHub Releases、构建产物和对外安装清单。
+
+**最新更新：v2.16.0**
+
+**v2.16.0 更新**：新增 `/dbs-script-flow`——短视频逐字稿逻辑延续检查。三个维度扫描：段落间逻辑衔接、段落内信息密度、句子口播流畅度，找出「观众会在哪一秒划走」的风险点。诊断完默认主动问是否做标记式改稿（保留原文，用删除线和 🆕 标出改动）。
 
 **v2.15.1 更新**：新增 `/dbs-wechat-html`——把 Markdown 转成可粘贴到微信公众号后台的 HTML，内置 15 种经典媒体/科技产品/中文公众号风格，支持推荐单风格、6 个预览、全量 15 个三种生成模式。
 
@@ -50,9 +54,9 @@ npx -y skills add dontbesilent2025/dbskill -g --all
 
 #### Trae Solo
 
-Trae Solo 一个 zip 装一个 skill。从 [GitHub Releases](https://github.com/dontbesilent2025/dbskill/releases) 下载最新的 `dbskill-版本号.zip`，解压后里面是 24 个独立的 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
+Trae Solo 一个 zip 装一个 skill。从 [GitHub Releases](https://github.com/dontbesilent2025/dbskill/releases) 下载最新的 `dbskill-版本号.zip`，解压后里面是当前正式发布的独立 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
 
-如果想本地构建，运行 `bash tools/build-skills.sh`，产物在 `dist/skills/`。
+如果想本地构建，运行 `bash tools/build-skills.sh`，产物在 `dist/skills/`。脚本会自动跳过名字里带 `beta` 的本地试验版 skill。
 
 ## 付费答疑群
 
@@ -102,8 +106,8 @@ npx -y skills add dontbesilent2025/dbskill -g --all
 | `/dbs-action` | 执行力诊断。阿德勒框架（原 dbs-unblock） |
 | `/dbs-deconstruct` | 概念拆解。维特根斯坦式审查 |
 | `/dbs-goal` | 目标清晰化。把模糊目标审计成可检查的交付物 |
-| `/dbs-good-question` 或 `/好问题` | 好问题生成器。把模糊问题改成 Agent 可推理、可批评、可验证的问题说明书 |
-| `/dbs-decision` 或 `/决策系统` | 个人决策系统。把任何长期跟踪的领域做成本地知识工程，四层结构 + 来源标签 + 隐私模式 |
+| `/dbs-good-question` | 好问题生成器。把模糊问题改成 Agent 可推理、可批评、可验证的问题说明书 |
+| `/dbs-decision` | 个人决策系统。把任何长期跟踪的领域做成本地知识工程，四层结构 + 来源标签 + 隐私模式 |
 
 ### 内容传播工具
 
@@ -111,6 +115,7 @@ npx -y skills add dontbesilent2025/dbskill -g --all
 |---|---|
 | `/dbs-spread` | 传播心理解码。用 5 个经典传播学理论分析已有内容为什么能引起共鸣，输出受众情绪底层和聊天室讨论方向 |
 | `/dbs-resonate` | 文稿共鸣诊断。写完文稿但心里没底时用，专门识别「写得全面但没刺中核心」的问题，给出具体删改建议 |
+| `/dbs-script-flow` | 逻辑延续检查。三维扫描逐字稿（段落衔接 / 信息密度 / 口播流畅度），找出「观众会在哪一秒划走」的风险点，支持标记式改稿 |
 
 ### 学习工具
 
@@ -137,7 +142,7 @@ npx -y skills add dontbesilent2025/dbskill -g --all
 
 | Skill | 做什么 |
 |---|---|
-| `/dbs-decision` 或 `/决策系统` | 个人决策系统主入口。自动判断是更新状态、立案、回填还是出快照 |
+| `/dbs-decision` | 个人决策系统主入口。自动判断是更新状态、立案、回填还是出快照 |
 | `/决策立案` | 强制进入立案模式（建决策事件文件） |
 | `/结果回填` | 强制进入回填模式（事件结果落盘） |
 | `/状态画像` | 生成阶段快照 |
@@ -166,13 +171,14 @@ npx -y skills add dontbesilent2025/dbskill -g --all
 | Skill | 做什么 |
 |---|---|
 | `/dbs-agent-migration` | Agent 工作台迁移。把任意项目整理成 Claude Code / Codex / Grok 三端一致的 Agent 工作台：审计规则文件、识别真源、统一命名与 bridge |
+| `/dbs-bridge` | 双端 skill 桥接。把任意 skill 目录用软链同时挂到 Claude Code 和 Codex，改源目录后两端自动同步。支持单个 skill、集合目录、外部路径，以及拆桥和状态查看 |
 
 ### chatroom 系列
 
 | Skill | 做什么 |
 |---|---|
-| `/dbs-chatroom-austrian` 或 `/奥派` | 奥派经济聊天室。哈耶克 × 米塞斯 × Claude 三人对话 |
-| `/dbs-chatroom` 或 `/定向聊天室` | 定向聊天室。推荐专家或指定人物，多角色对话 + 判官总结 |
+| `/dbs-chatroom-austrian` | 奥派经济聊天室。哈耶克 × 米塞斯 × Claude 三人对话 |
+| `/dbs-chatroom` | 定向聊天室。推荐专家或指定人物，多角色对话 + 判官总结 |
 
 ### 工具路径图
 

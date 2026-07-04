@@ -4,8 +4,8 @@
     "name": "dontbesilent2025"
   },
   "metadata": {
-    "description": "dontbesilent 商业诊断工具箱 — 从 12,307 条推文中提炼方法论，做成 24 个 Claude Code skill",
-    "version": "2.15.1"
+    "description": "dontbesilent 商业诊断工具箱 — 从 12,307 条推文中提炼方法论，做成 26 个 Claude Code skill",
+    "version": "2.16.0"
   },
   "plugins": [
     {
@@ -266,6 +266,25 @@
       ]
     },
     {
+      "name": "dbs-bridge",
+      "description": "双端 skill 桥接。把任意包含 SKILL.md 的 skill 目录，或包含多个 skill 子目录的集合目录，用软链同时挂到 Claude Code 和 Codex。改源目录后两端自动同步。支持单个 skill、集合目录批量桥接、外部绝对路径，以及拆桥和状态查看。",
+      "source": "./",
+      "strict": false,
+      "version": "1.0.0",
+      "category": "workflow-infrastructure",
+      "keywords": [
+        "bridge",
+        "symlink",
+        "claude-code",
+        "codex",
+        "skill-management",
+        "chinese"
+      ],
+      "skills": [
+        "./skills/dbs-bridge"
+      ]
+    },
+    {
       "name": "dbs-agent-migration",
       "description": "Agent 工作台迁移。把任意项目整理成 Claude Code / Codex / Grok 三端一致的 Agent 工作台：审计规则文件、识别真源、统一命名与 bridge。",
       "source": "./",
@@ -450,6 +469,25 @@
       ],
       "skills": [
         "./skills/dbs-resonate"
+      ]
+    },
+    {
+      "name": "dbs-script-flow",
+      "description": "短视频逐字稿逻辑延续检查。找出「观众会在哪一秒划走」的风险点：段落间逻辑衔接、段落内信息密度、句子口播流畅度。诊断完默认主动问是否标记式改稿。",
+      "source": "./",
+      "strict": false,
+      "version": "1.0.0",
+      "category": "content-creation",
+      "keywords": [
+        "script",
+        "flow",
+        "continuity",
+        "completion-rate",
+        "short-video",
+        "chinese"
+      ],
+      "skills": [
+        "./skills/dbs-script-flow"
       ]
     }
   ]
